@@ -8,6 +8,8 @@ namespace AboutAsyncAwait
     {
         private static bool _isDone = false;
 
+        private static object _lock = new object();
+
         static void Main(string[] args)
         {
             new Thread(Todo).Start();
@@ -18,11 +20,13 @@ namespace AboutAsyncAwait
 
         public static void Todo()
         {
-            if (!_isDone)
-            {
-                Thread.Sleep(100);//等待后 这里会执行两次
+            //线程加锁  独占锁 在一个线程未执行完成之前别的线程不能访问
+
+            lock(_lock){
                 _isDone = true;
                 Console.WriteLine($"执行：{_isDone}");
+                Thread.Sleep(2000); //等待后 这里会执行两次 线程不安全
+
             }
         }
     }
