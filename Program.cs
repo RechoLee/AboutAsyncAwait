@@ -8,18 +8,16 @@ namespace AboutAsyncAwait
     {
         static void Main(string[] args)
         {
-            new Thread(Todo).Start();//.Net 1.0就有
+            Console.WriteLine($"我是主线程：id为{Thread.CurrentThread.ManagedThreadId}");
 
-            Task.Factory.StartNew(Todo); //.Net4.0引入TPl
-
-            Task.Run(new Action(Todo));//.Net 4.5新增
+            ThreadPool.QueueUserWorkItem(new WaitCallback(Todo));
 
             Console.ReadKey();
         }
 
-        public static void Todo()
+        public static void Todo(object state)
         {
-            Console.WriteLine("todo something");
+            Console.WriteLine($"我是新的线程，id为：{Thread.CurrentThread.ManagedThreadId}");
         }
     }
 }
