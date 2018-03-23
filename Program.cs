@@ -14,6 +14,15 @@ namespace AboutAsyncAwait
 
             Task.Run(() => { Todo("arg1,task","arg2","arg3"); });
 
+            //Thread是不能返回值的
+            //使用Task
+            var returnStr = Task.Run<string>(() => Todo("return"));
+
+            Console.WriteLine("返回值之前");
+
+            Console.WriteLine($"返回值是：{returnStr.Result}");
+
+
             Console.ReadKey();
         }
 
@@ -26,6 +35,12 @@ namespace AboutAsyncAwait
         {
             //Todo
             Console.WriteLine($"{arg1} {arg2} {arg3}");
+        }
+
+        public static string Todo(string arg1)
+        {
+            Thread.Sleep(2000);
+            return arg1;
         }
     }
 }
