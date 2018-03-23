@@ -9,39 +9,25 @@ namespace AboutAsyncAwait
 
         static void Main(string[] args)
         {
-
-            try
-            {
-                var task = Task.Run(() => { Todo(); });
-                task.Wait();
-
-                var strTask = Task.Run(() => Get());
-                var result = strTask.Result;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
-            }
+            Console.WriteLine($"主线程id:{Thread.CurrentThread.ManagedThreadId}");
+            Test();
 
             Console.ReadKey();
         }
 
-        //关于线程执行过程的异常
-        static void Todo()
+        static async Task Test()
         {
-            try
-            {
-                throw null;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
-            }
+            var name=await GetName();
+            Console.WriteLine($"线程id:{Thread.CurrentThread.ManagedThreadId}");
+            Console.WriteLine(name);
         }
 
-        static string Get()
+        static async Task<string> GetName()
         {
-            throw null;
+            await Task.Delay(1000);
+            Console.WriteLine($"线程id:{Thread.CurrentThread.ManagedThreadId}");
+
+            return "hello";
         }
     }
 }
