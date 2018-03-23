@@ -20,6 +20,7 @@ namespace AboutAsyncAwait
         {
             if (!_isDone)
             {
+                Thread.Sleep(100);//等待后 这里会执行两次
                 _isDone = true;
                 Console.WriteLine($"执行：{_isDone}");
             }
