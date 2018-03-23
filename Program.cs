@@ -14,6 +14,7 @@ namespace AboutAsyncAwait
 
             Task.Run(new Action(Todo));//.Net 4.5新增
 
+            Console.ReadKey();
         }
 
         public static void Todo()
